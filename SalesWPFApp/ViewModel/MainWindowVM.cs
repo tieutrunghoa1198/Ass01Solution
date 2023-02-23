@@ -16,8 +16,7 @@ namespace SalesWPFApp.ViewModel
         public ICommand ShowTable { get; set; }
         public ICommand ShowMemberTable { get; set; }
         public ICommand ShowOrderTable { get; set; }
-        private static FactoryTest factory;
-        private ObservableCollection<object> _currentList;
+        private ObservableCollection<object> _currentList;   
         
         public ObservableCollection<object> CurrentList 
         { 
