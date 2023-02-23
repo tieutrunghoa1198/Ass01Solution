@@ -1,0 +1,46 @@
+﻿<Window x:Class="SalesWPFApp.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SalesWPFApp"
+        mc:Ignorable="d"
+        Title="LoginWindow" Height="287" Width="458"
+        DataContext="{StaticResource LoginVM}">
+    <Grid>
+        <Button 
+            Command="{Binding LoginCommand}" 
+            Content="Login" 
+            HorizontalAlignment="Left" 
+            Margin="263,203,0,0" 
+            VerticalAlignment="Top" 
+            Width="66"></Button>
+        <TextBox 
+            Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" 
+            HorizontalAlignment="Left" 
+            Margin="209,101,0,0" 
+            TextWrapping="Wrap" 
+            VerticalAlignment="Top" 
+            Width="120"/>
+        
+        <Label 
+            Content="Username" 
+            HorizontalAlignment="Left" 
+            Margin="110,97,0,0" 
+            VerticalAlignment="Top"/>
+        <Label 
+            Content="Password" 
+            HorizontalAlignment="Left" 
+            Margin="110,152,0,0" 
+            VerticalAlignment="Top"/>
+        <TextBox 
+            Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" 
+            HorizontalAlignment="Left" 
+            Margin="209,156,0,0" 
+            TextWrapping="Wrap" 
+            VerticalAlignment="Top" 
+            Width="120"/>
+        <!--<PasswordBox PasswordChar="❤" Password="{Binding Password}" HorizontalAlignment="Left" Margin="209,156,0,0" VerticalAlignment="Top" Width="120"/>-->
+
+    </Grid>
+</Window>
