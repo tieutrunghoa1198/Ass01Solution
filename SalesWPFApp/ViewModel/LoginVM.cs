@@ -8,9 +8,7 @@ namespace SalesWPFApp.ViewModel
     class LoginVM : BaseVM, ICloseWindow
     {
         private string _UserName;
-        public string UserName { get => _UserName; set { _UserName = value; OnPropertyChanged(); } }
         private string _Password;
-        public string Password { get => _Password; set { _Password = value; OnPropertyChanged(); } }
         public ICommand LoginCommand { get; set; }
         public Action Close { get; set; }
         public string UserName 
