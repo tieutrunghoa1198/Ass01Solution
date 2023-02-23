@@ -1,0 +1,87 @@
+﻿<Window x:Class="SalesWPFApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SalesWPFApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="548" Width="845"
+        DataContext="{StaticResource MainWindowVM}">
+    <Border>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Management"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       FontSize="22"
+                       Margin="20,0,0,0"/>
+            <StackPanel Grid.Row="1">
+                <RadioButton Content="Member"
+                             Height="50"
+                             FontSize="14"
+                             Command="{Binding ShowMemberTable}"
+                             Style="{StaticResource MenuButtonTheme}"/>
+                <RadioButton Content="Product"
+                             Height="50"
+                             FontSize="14"
+                             Command="{Binding ShowTable}"
+                             Style="{StaticResource MenuButtonTheme}"/>
+                <RadioButton Content="Order"
+                             Height="50"
+                             FontSize="14"
+                             Command="{Binding ShowOrderTable}"
+                             Style="{StaticResource MenuButtonTheme}"/>
+            </StackPanel>
+
+            <Grid Grid.Row="1"
+                  Grid.Column="1"
+                  Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="350"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" CanVerticallyScroll="True">
+                    <DataGrid ItemsSource="{Binding CurrentList}" 
+                              MaxHeight="300" 
+                              CanUserAddRows="False"
+                              ScrollViewer.CanContentScroll="True" 
+                              ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+                </StackPanel>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" 
+                            Content="Create" 
+                            Width="88" 
+                            Height="30"
+                            Command="{Binding CreateCommand}"/>
+                    
+                    <Button Grid.Column="1" 
+                            Content="Update" 
+                            Width="88" 
+                            Height="30"/>
+
+                    <Button Grid.Column="2" 
+                            Content="Delete" 
+                            Width="88" 
+                            Height="30"/>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
+
+    
