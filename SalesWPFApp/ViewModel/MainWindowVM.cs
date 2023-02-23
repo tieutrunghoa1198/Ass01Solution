@@ -1,5 +1,12 @@
 ﻿using DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Xml.Linq;
 using System.Collections.ObjectModel;
 namespace SalesWPFApp.ViewModel
 {
@@ -9,6 +16,7 @@ namespace SalesWPFApp.ViewModel
         public ICommand ShowTable { get; set; }
         public ICommand ShowMemberTable { get; set; }
         public ICommand ShowOrderTable { get; set; }
+        private static FactoryTest factory;
         private ObservableCollection<object> _currentList;
         
         public ObservableCollection<object> CurrentList 
