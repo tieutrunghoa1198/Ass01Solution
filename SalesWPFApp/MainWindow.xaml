@@ -1,4 +1,4 @@
-﻿<Window x:Class="SalesWPFApp.MainWindow"
+﻿ <Window x:Class="SalesWPFApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:SalesWPFApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="548" Width="845"
+        WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource MainWindowVM}">
     <Border>
         <Grid>
@@ -24,21 +25,27 @@
                        FontSize="22"
                        Margin="20,0,0,0"/>
             <StackPanel Grid.Row="1">
-                <RadioButton Content="Member"
+                <!--<RadioButton Content="Member"
                              Height="50"
-                             FontSize="14"
-                             Command="{Binding ShowMemberTable}"
-                             Style="{StaticResource MenuButtonTheme}"/>
-                <RadioButton Content="Product"
-                             Height="50"
+                             Name="radioMember"
                              FontSize="14"
                              Command="{Binding ShowTable}"
-                             Style="{StaticResource MenuButtonTheme}"/>
+                             Style="{StaticResource MenuButtonTheme}"
+                             CommandParameter="{Binding ElementName=radioMember, Path=Content}"/>-->
+                <RadioButton Content="Product"
+                             Height="50"
+                             Name="radioProduct"
+                             FontSize="14"
+                             Command="{Binding ShowTable}"
+                             Style="{StaticResource MenuButtonTheme}"
+                             CommandParameter="{Binding ElementName=radioProduct, Path=Content}"/>
                 <RadioButton Content="Order"
                              Height="50"
+                             Name="radioOrder"
                              FontSize="14"
-                             Command="{Binding ShowOrderTable}"
-                             Style="{StaticResource MenuButtonTheme}"/>
+                             Command="{Binding ShowTable}"
+                             Style="{StaticResource MenuButtonTheme}"
+                             CommandParameter="{Binding ElementName=radioOrder, Path=Content}"/>
             </StackPanel>
 
             <Grid Grid.Row="1"
@@ -72,12 +79,14 @@
                     <Button Grid.Column="1" 
                             Content="Update" 
                             Width="88" 
-                            Height="30"/>
+                            Height="30"
+                            Command="{Binding UpdateCommand}"/>
 
                     <Button Grid.Column="2" 
                             Content="Delete" 
                             Width="88" 
-                            Height="30"/>
+                            Height="30"
+                            Command="{Binding DeleteCommand}"/>
                 </Grid>
             </Grid>
         </Grid>

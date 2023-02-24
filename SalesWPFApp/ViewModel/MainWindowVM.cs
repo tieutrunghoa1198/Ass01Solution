@@ -1,4 +1,4 @@
-﻿using DataAccess;
+﻿using DataAccess.test;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +12,13 @@ namespace SalesWPFApp.ViewModel
 {
     class MainWindowVM : BaseVM
     {
+        private ObservableCollection<object> _currentList;
+        private string _currentType { get; set; }
         public ICommand CreateCommand { get; set; }
+        public ICommand UpdateCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
         public ICommand ShowTable { get; set; }
-        public ICommand ShowMemberTable { get; set; }
-        public ICommand ShowOrderTable { get; set; }
-        private ObservableCollection<object> _currentList;   
-        
+
         public ObservableCollection<object> CurrentList 
         { 
             get { return _currentList; } 
@@ -27,39 +28,25 @@ namespace SalesWPFApp.ViewModel
                 OnPropertyChanged("CurrentList");
             }
         }
+
         public MainWindowVM() 
         {
             CurrentList = new ObservableCollection<object>();
+            _currentType = "";
             ShowTableRegister();
-            ShowMemberRegister();
-            ShowOrderRegister();
             CreateCommandRegister();
+            UpdateCommandRegister();
+            DeleteCommandRegister();
         }   
 
         private void ShowTableRegister()
         {
-            this.ShowTable = new RelayCommand<object>((p) =>
+            this.ShowTable = new RelayCommand<object>((param) =>
             {
                 ClearList();
-                CurrentList = GetFactory("product").CreateCollection();
-            });
-        }
-
-        private void ShowMemberRegister()
-        {
-            this.ShowMemberTable = new RelayCommand<object>((p) =>
-            {
-                ClearList();
-                CurrentList = GetFactory("order").CreateCollection();
-            });
-        }
-
-        private void ShowOrderRegister()
-        {
-            this.ShowOrderTable = new RelayCommand<object>((p) =>
-            {
-                ClearList();
-                CurrentList = GetFactory("order").CreateCollection();
+                string type = param.ToString().ToLower();
+                _currentType = type;
+                CurrentList = GetFactory(type).CreateCollection();
             });
         }
 
@@ -67,7 +54,24 @@ namespace SalesWPFApp.ViewModel
         {
             this.CreateCommand = new RelayCommand<object>((p) =>
             {
+                Console.Write(_currentType);
                 CurrentList.Add(new Product(1, "asd"));
+            });
+        }
+
+        private void UpdateCommandRegister() 
+        {
+            this.UpdateCommand = new RelayCommand<object>((p) =>
+            {
+                Console.WriteLine("update");
+            });
+        }
+
+        private void DeleteCommandRegister()
+        {
+            this.DeleteCommand = new RelayCommand<object>((p) =>
+            {
+                Console.WriteLine("delete");
             });
         }
 

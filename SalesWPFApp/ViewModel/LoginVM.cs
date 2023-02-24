@@ -46,7 +46,7 @@ namespace SalesWPFApp.ViewModel
                 string sysUserName = sysAccount["username"] ?? "";
                 string sysPassword = sysAccount["password"] ?? "";
                 Boolean matchUserName = UserName.ToLower().Equals(sysUserName);
-                Boolean matchPassword = UserName.ToLower().Equals(sysPassword);
+                Boolean matchPassword = Password.ToLower().Equals(sysPassword);
                 Boolean matchAccount = matchPassword && matchUserName;
                 if (matchAccount)
                 {

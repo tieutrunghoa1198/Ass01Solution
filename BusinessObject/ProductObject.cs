@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess
+namespace BusinessObject
 {
-    public class MemberDAO
+    public class ProductObject
     {
     }
 }
- 

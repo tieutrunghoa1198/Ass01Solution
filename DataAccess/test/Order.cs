@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess
+namespace DataAccess.test
 {
     public class Order
-    {   
+    {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Order ()
+        public Order()
         {
 
         }

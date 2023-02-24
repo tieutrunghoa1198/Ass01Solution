@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccess;
+using DataAccess.test;
+
 namespace SalesWPFApp.ViewModel
 {
     class DataGridFactory : FactoryTest
@@ -45,6 +43,8 @@ namespace SalesWPFApp.ViewModel
                 case "order":
                     MyObject = new DataGridFactoryOrder();
                     break;
+                default: 
+                    throw new ArgumentException();
             }
         }
     }

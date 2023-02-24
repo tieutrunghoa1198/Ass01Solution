@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess
+namespace DataAccess.test
 {
     public class Product
     {
@@ -13,10 +13,10 @@ namespace DataAccess
 
         public Product() { }
 
-        public Product(int id, string name) 
+        public Product(int id, string name)
         {
-            this.Id= id;
-            this.Name= name;
+            Id = id;
+            Name = name;
         }
 
         public override string? ToString()

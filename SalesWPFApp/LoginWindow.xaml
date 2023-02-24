@@ -6,41 +6,70 @@
         xmlns:local="clr-namespace:SalesWPFApp"
         mc:Ignorable="d"
         Title="LoginWindow" Height="287" Width="458"
+        WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource LoginVM}">
     <Grid>
-        <Button 
-            Command="{Binding LoginCommand}" 
-            Content="Login" 
-            HorizontalAlignment="Left" 
-            Margin="263,203,0,0" 
-            VerticalAlignment="Top" 
-            Width="66"></Button>
-        <TextBox 
-            Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" 
-            HorizontalAlignment="Left" 
-            Margin="209,101,0,0" 
-            TextWrapping="Wrap" 
-            VerticalAlignment="Top" 
-            Width="120"/>
-        
-        <Label 
-            Content="Username" 
-            HorizontalAlignment="Left" 
-            Margin="110,97,0,0" 
-            VerticalAlignment="Top"/>
-        <Label 
-            Content="Password" 
-            HorizontalAlignment="Left" 
-            Margin="110,152,0,0" 
-            VerticalAlignment="Top"/>
-        <TextBox 
-            Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" 
-            HorizontalAlignment="Left" 
-            Margin="209,156,0,0" 
-            TextWrapping="Wrap" 
-            VerticalAlignment="Top" 
-            Width="120"/>
-        <!--<PasswordBox PasswordChar="❤" Password="{Binding Password}" HorizontalAlignment="Left" Margin="209,156,0,0" VerticalAlignment="Top" Width="120"/>-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition/>
+            <RowDefinition Height="75"/>
+        </Grid.RowDefinitions>
 
+        <TextBlock Grid.Row="0"
+                   Grid.Column="1"
+                   Text="Login"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="24"
+                   FontWeight="Bold">
+        </TextBlock>
+
+        <Grid Grid.Row="1"
+                    Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Username:"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"/>
+
+            <Label Grid.Row="1" 
+                   Content="Password:"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"/>
+
+            <TextBox Grid.Row="0"
+                     Grid.Column="1"
+                     Height="20"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Stretch"
+                     Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBox Grid.Row="1"
+                     Grid.Column="1"
+                     Height="20"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Stretch"
+                     Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <Button Grid.Column="1"
+                Grid.Row="2"
+                Content="Login"
+                Width="88"
+                Height="24"
+                HorizontalAlignment="Right"
+                Command="{Binding LoginCommand}"/>
     </Grid>
 </Window>
