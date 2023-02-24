@@ -29,13 +29,6 @@
                    FontSize="24"
                    FontWeight="Bold"/>
 
-        <!--public int ProductId { get; set; }
-        public int CategoryId { get; set; }
-        public string ProductName { get; set; }
-        public string Weight { get; set; }
-        public Decimal UnitPrice { get; set; }
-        public int UnitInStock { get; set; }-->
-
         <Grid Grid.Row="1"
               Grid.Column="1">
             <Grid.ColumnDefinitions>
@@ -85,9 +78,10 @@
                      Grid.Column="1"
                      Height="20"
                      Width="300"
+                     
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left"
-                     />
+                     Text="{Binding ProductId, UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBox Grid.Row="1"
                      Grid.Column="1"
@@ -95,7 +89,7 @@
                      Width="300"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left"
-                     />
+                     Text="{Binding CategoryId, UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBox Grid.Row="2"
                      Grid.Column="1"
@@ -103,7 +97,7 @@
                      Width="300"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left"
-                     />
+                     Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBox Grid.Row="3"
                      Grid.Column="1"
@@ -111,7 +105,7 @@
                      Width="300"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left"
-                     />
+                     Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBox Grid.Row="4"
                      Grid.Column="1"
@@ -119,7 +113,7 @@
                      Width="300"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left"
-                     />
+                     Text="{Binding UnitPrice, UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBox Grid.Row="5"
                      Grid.Column="1"
@@ -127,7 +121,7 @@
                      Width="300"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left"
-                     />
+                     Text="{Binding UnitInStock, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
 
         <Grid Grid.Row="2"
@@ -139,7 +133,8 @@
             <Button Grid.Column="0"
                     Content="Confirm" 
                     Height="30"
-                    Width="88"/>
+                    Width="88"
+                    Command="{Binding ConfirmCommand}"/>
         </Grid>
     </Grid>
 </Window>

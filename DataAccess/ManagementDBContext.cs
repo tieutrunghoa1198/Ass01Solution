@@ -22,7 +22,8 @@ namespace DataAccess
             modelBuilder.Entity<MemberDTO>(entity => 
             {
                 entity.ToTable("Member");
-                entity.HasKey(p => p.MemberId).HasName("MemberId");
+                entity.HasKey(p => p.MemberId)
+                      .HasName("MemberId");
                 
             });
 
@@ -32,7 +33,8 @@ namespace DataAccess
             modelBuilder.Entity<Product>(entity =>
             {
                 entity.ToTable("Product");
-                entity.HasKey(p => p.ProductId).HasName("ProductId");
+                entity.HasKey(p => p.ProductId)
+                      .HasName("ProductId");
             });
 
             /**
@@ -41,8 +43,11 @@ namespace DataAccess
             modelBuilder.Entity<OrderDTO>(entity =>
             {
                 entity.ToTable("Order");
-                entity.HasKey(p => p.OrderId).HasName("OrderId");
-                entity.HasOne<MemberDTO>(order => order.member).WithMany(mem => mem.Orders).HasForeignKey(o => o.MemberId);
+                entity.HasKey(p => p.OrderId)
+                      .HasName("OrderId");
+                entity.HasOne<MemberDTO>(order => order.member)
+                      .WithMany(mem => mem.Orders)
+                      .HasForeignKey(o => o.MemberId);
             });
             OnModelCreatingPartial(modelBuilder);
         }

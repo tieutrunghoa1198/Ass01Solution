@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.Windows.Input;
 namespace SalesWPFApp.ViewModel
 {
-    internal class OrderVM : BaseVM
+    class OrderVM : BaseVM
     {
+        
     }
 }

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SalesWPFApp.ViewModel.Interface;
+using SalesWPFApp.ViewModel;
 namespace SalesWPFApp
 {
     /// <summary>
@@ -26,6 +27,7 @@ namespace SalesWPFApp
         private ProductWindow() 
         {
             InitializeComponent();
+            ProductVM product = new ProductVM();
         }
         public static ProductWindow Instance
         {
