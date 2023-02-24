@@ -43,7 +43,7 @@ namespace SalesWPFApp
 
         private void OnStartup(object sender, StartupEventArgs e)
         {
-            var loginWindow = serviceProvider.GetService<LoginWindow>();
+            var loginWindow = serviceProvider.GetService<MainWindow>();
             loginWindow?.Show();   
         }
     }

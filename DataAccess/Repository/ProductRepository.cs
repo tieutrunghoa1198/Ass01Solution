@@ -3,22 +3,22 @@ namespace DataAccess.Repository
 {
     public class ProductRepository : IProductRepository
     {
-        public void Delete(ProductDTO item)
+        public void Delete(Product item)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ProductDTO> GetList()
+        public IEnumerable<Product> GetList()
         {
             throw new NotImplementedException();
         }
 
-        public void Insert(ProductDTO item)
+        public void Insert(Product item)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(ProductDTO item)
+        public void Update(Product item)
         {
             throw new NotImplementedException();
         }

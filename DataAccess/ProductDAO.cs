@@ -20,13 +20,14 @@ namespace DataAccess
             }
         }
 
-        public IEnumerable<ProductDTO> GetProductList()
+        public IEnumerable<Product> GetProductList()
         {
-            List<ProductDTO> products;
+            List<Product> products;
             try
             {
                 var myStockDB = new ManagementDBContext();
                 products = myStockDB.Products.ToList();
+                Console.WriteLine(products[0].ProductName);
             }
             catch (Exception ex)
             {

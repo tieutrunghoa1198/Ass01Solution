@@ -1,13 +1,8 @@
 ﻿using DataAccess.test;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Xml.Linq;
 using System.Collections.ObjectModel;
+using DataAccess;
 namespace SalesWPFApp.ViewModel
 {
     class MainWindowVM : BaseVM
@@ -71,6 +66,7 @@ namespace SalesWPFApp.ViewModel
         {
             this.DeleteCommand = new RelayCommand<object>((p) =>
             {
+                CurrentList = new ObservableCollection<object>(ProductDAO.Instance.GetProductList());
                 Console.WriteLine("delete");
             });
         }
