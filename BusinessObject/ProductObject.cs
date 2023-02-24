@@ -1,4 +1,5 @@
-﻿using DataAccess.Repository;
+﻿using BusinessObject.Factory;
+using DataAccess.Repository;
 using System.Collections.ObjectModel;
 namespace BusinessObject
 {

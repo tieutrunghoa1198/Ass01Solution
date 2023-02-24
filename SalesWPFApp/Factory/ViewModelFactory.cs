@@ -1,5 +1,5 @@
 ﻿using SalesWPFApp.ViewModel.Interface;
-namespace SalesWPFApp.ViewModel
+namespace SalesWPFApp.Factory
 {
     internal class ViewModelFactory
     {
@@ -11,8 +11,8 @@ namespace SalesWPFApp.ViewModel
                 case "product":
                     dialog = ProductWindow.Instance;
                     break;
-                case "order": 
-                    dialog = OrderWindow.Instance; 
+                case "order":
+                    dialog = OrderWindow.Instance;
                     break;
                 case "member":
                     dialog = MemberWindow.Instance;

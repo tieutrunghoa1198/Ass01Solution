@@ -1,9 +1,10 @@
-﻿using DataAccess.test;
-using System;
+﻿using System;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using BusinessObject;
 using SalesWPFApp.ViewModel.Interface;
+using BusinessObject.Factory;
+using SalesWPFApp.Factory;
 namespace SalesWPFApp.ViewModel
 {
     class MainWindowVM : BaseVM

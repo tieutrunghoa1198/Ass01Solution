@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
-using BusinessObject;
 using DataAccess.Repository;
 using Microsoft.Extensions.Configuration;
-using System.IO;
-using SalesWPFApp.ViewModel;
+
 namespace SalesWPFApp
 {
     /// <summary>
@@ -23,13 +16,7 @@ namespace SalesWPFApp
         public IConfiguration Configuration { get; private set; }
         public App()
         {
-
             ServiceCollection services = new ServiceCollection();
-            var builder = new ConfigurationBuilder()
-                                .SetBasePath(Directory.GetCurrentDirectory())
-                                .AddJsonFile("AppSettings.json", optional: false, reloadOnChange: true);
-
-            Configuration = builder.Build();
             ConfigureServices(services);
             serviceProvider = services.BuildServiceProvider();
         }
@@ -40,7 +27,7 @@ namespace SalesWPFApp
             services.AddSingleton(typeof(IProductRepository), typeof(ProductRepository));
             services.AddSingleton<LoginWindow>();
             services.AddSingleton<MainWindow>();
-            services.AddSingleton<MainWindowVM>();
+            services.AddSingleton<ProductWindow>();
         }
 
         private void OnStartup(object sender, StartupEventArgs e)
