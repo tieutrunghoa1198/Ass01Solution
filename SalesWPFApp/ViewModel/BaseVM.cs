@@ -17,6 +17,7 @@ namespace SalesWPFApp.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
     }
     class RelayCommand<T> : ICommand
     {

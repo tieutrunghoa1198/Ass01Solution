@@ -5,13 +5,14 @@ namespace DataAccess
 {
     public partial class ManagementDBContext : DbContext
     {
+        private static readonly string ConnectionString = @"Data Source=127.0.0.1,1433;User ID=sa;Password=123456;Database=PRN221_ASS01;Encrypt=False;Trusted_Connection=False;";
         public ManagementDBContext() { }
         public ManagementDBContext(DbContextOptions<ManagementDBContext> options) : base(options) { }
         public virtual DbSet<MemberDTO> Members { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<OrderDTO> Orders { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Data Source=127.0.0.1,1433;User ID=sa;Password=123456;Database=PRN221_ASS01;Encrypt=False;Trusted_Connection=False;");
+        => optionsBuilder.UseSqlServer(ConnectionString);
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

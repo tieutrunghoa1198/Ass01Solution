@@ -2,19 +2,28 @@
 using System;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
-using DataAccess;
 using BusinessObject;
-using DataAccess.Repository;
+using SalesWPFApp.ViewModel.Interface;
 namespace SalesWPFApp.ViewModel
 {
     class MainWindowVM : BaseVM
     {
         private ObservableCollection<object> _currentList;
         private string _currentType { get; set; }
+        private object _selectedItem { get; set; }
         public ICommand CreateCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand ShowTable { get; set; }
+        public object SelectedItem 
+        { 
+            get { return _selectedItem; }
+            set
+            {
+                _selectedItem = value;
+                OnPropertyChanged(nameof(SelectedItem));
+            } 
+        }
         public ObservableCollection<object> CurrentList 
         { 
             get { return _currentList; } 
@@ -27,8 +36,8 @@ namespace SalesWPFApp.ViewModel
 
         public MainWindowVM() 
         {
-            _currentType = "product";
-            CurrentList = new ProductObject().CreateCollection();
+            _currentType = "member";
+            CurrentList = new MemberObject().CreateCollection();
             ShowTableRegister();
             CreateCommandRegister();
             UpdateCommandRegister();
@@ -43,7 +52,6 @@ namespace SalesWPFApp.ViewModel
                 string type = param.ToString().ToLower();
                 _currentType = type;
                 CurrentList = GetFactory(type).CreateCollection();
-                /*CurrentList = GetFactory(type).CreateCollection();*/
             });
         }
 
@@ -51,24 +59,27 @@ namespace SalesWPFApp.ViewModel
         {
             this.CreateCommand = new RelayCommand<object>((p) =>
             {
-                Console.Write(_currentType);
-                CurrentList.Add(new Product(1, "asd"));
+                GetWindowFactory(_currentType).ShowDialog();
             });
         }
 
         private void UpdateCommandRegister() 
         {
-            this.UpdateCommand = new RelayCommand<object>((p) =>
+            this.UpdateCommand = new RelayCommand<object>(
+            hasSelectedItem(),
+            (p) =>
             {
+                Console.Write(SelectedItem);
                 Console.WriteLine("update");
             });
         }
 
         private void DeleteCommandRegister()
         {
-            this.DeleteCommand = new RelayCommand<object>((p) =>
+            this.DeleteCommand = new RelayCommand<object>(
+            hasSelectedItem(), 
+            (p) =>
             {
-                CurrentList = new ObservableCollection<object>(ProductDAO.Instance.GetProductList());
                 Console.WriteLine("delete");
             });
         }
@@ -76,6 +87,23 @@ namespace SalesWPFApp.ViewModel
         private IDataGridFactory GetFactory(string type)
         {
             return new CollectionFactory(type).MyList;
+        }
+
+        private IDialog GetWindowFactory(string type)
+        {
+            return new ViewModelFactory(type).dialog;
+        }
+
+        private Predicate<object> hasSelectedItem()
+        {
+            return (p) =>
+            {
+                if (SelectedItem == null)
+                {
+                    return false;
+                }
+                else return true;
+            };
         }
 
         private void ClearList()

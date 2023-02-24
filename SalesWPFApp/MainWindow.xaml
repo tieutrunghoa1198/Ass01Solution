@@ -29,6 +29,7 @@
                              Height="50"
                              Name="radioMember"
                              FontSize="14"
+                             IsChecked="True"
                              Command="{Binding ShowTable}"
                              Style="{StaticResource MenuButtonTheme}"
                              CommandParameter="{Binding ElementName=radioMember, Path=Content}"/>
@@ -36,7 +37,6 @@
                              Height="50"
                              Name="radioProduct"
                              FontSize="14"
-                             IsChecked="True"
                              Command="{Binding ShowTable}"
                              Style="{StaticResource MenuButtonTheme}"
                              CommandParameter="{Binding ElementName=radioProduct, Path=Content}"/>
@@ -61,6 +61,7 @@
                     <DataGrid ItemsSource="{Binding CurrentList}" 
                               MaxHeight="300" 
                               CanUserAddRows="False"
+                              SelectedItem="{Binding SelectedItem}"
                               ScrollViewer.CanContentScroll="True" 
                               ScrollViewer.VerticalScrollBarVisibility="Visible"/>
                 </StackPanel>

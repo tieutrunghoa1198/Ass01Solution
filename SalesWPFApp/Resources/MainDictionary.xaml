@@ -3,4 +3,7 @@
                     xmlns:viewmodel="clr-namespace:SalesWPFApp.ViewModel">
     <viewmodel:MainWindowVM x:Key="MainWindowVM"></viewmodel:MainWindowVM>
     <viewmodel:LoginVM x:Key="LoginVM"></viewmodel:LoginVM>
+    <viewmodel:ProductVM x:Key="ProductVM"></viewmodel:ProductVM>
+    <viewmodel:OrderVM x:Key="OrderVM"></viewmodel:OrderVM>
+    <viewmodel:MemberVM x:Key="MemberVM"></viewmodel:MemberVM>
 </ResourceDictionary>
