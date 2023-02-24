@@ -14,7 +14,7 @@ namespace DataAccess.DTO
         public DateTime RequiredDate { get; set; }
         public DateTime ShippedDate { get; set; }
         public Decimal Freight { get; set; }
-
+        public MemberDTO member { get; set; }
         public OrderDTO()
         {
         }

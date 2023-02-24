@@ -4,23 +4,15 @@ namespace DataAccess.Repository
     public class ProductRepository : IProductRepository
     {
         public void Delete(Product item)
-        {
-            throw new NotImplementedException();
-        }
+        => ProductDAO.Instance.Delete(item);
 
-        public IEnumerable<Product> GetList()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<Product> GetList() 
+        => ProductDAO.Instance.GetProductList();
 
-        public void Insert(Product item)
-        {
-            throw new NotImplementedException();
-        }
+        public void Insert(Product item) 
+        => ProductDAO.Instance.AddNew(item);
 
-        public void Update(Product item)
-        {
-            throw new NotImplementedException();
-        }
+        public void Update(Product item) 
+        => ProductDAO.Instance.Update(item);
     }
 }

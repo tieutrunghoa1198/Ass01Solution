@@ -1,4 +1,6 @@
 ﻿using DataAccess.DTO;
+using Microsoft.EntityFrameworkCore;
+
 namespace DataAccess
 {
     public class ProductDAO
@@ -27,13 +29,93 @@ namespace DataAccess
             {
                 var myStockDB = new ManagementDBContext();
                 products = myStockDB.Products.ToList();
-                Console.WriteLine(products[0].ProductName);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
             return products;
+        }
+
+        public Product GetProductByID(int productID)
+        {
+            Product product = null;
+            try
+            {
+                var myStockDB = new ManagementDBContext();
+                product = myStockDB.Products.SingleOrDefault(car => car.ProductId == productID);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return product;
+        }
+
+        public void AddNew(Product product)
+        {
+            try
+            {
+                Product _product = GetProductByID(product.ProductId);
+                if (_product == null)
+                {
+                    var myStockDB = new ManagementDBContext();
+                    myStockDB.Products.Add(product);
+                    myStockDB.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("The car is already exist.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void Update(Product product)
+        {
+            try
+            {
+                Product _product = GetProductByID(product.ProductId);
+                if (_product != null)
+                {
+                    var myStockDB = new ManagementDBContext();
+                    myStockDB.Entry<Product>(product).State = EntityState.Modified;
+                    myStockDB.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("The car does not already exist.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void Delete(Product product)
+        {
+            try
+            {
+                Product _product = GetProductByID(product.ProductId);
+                if (_product != null)
+                {
+                    var myStockDB = new ManagementDBContext();
+                    myStockDB.Products.Remove(product);
+                    myStockDB.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("The car does not already exist.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

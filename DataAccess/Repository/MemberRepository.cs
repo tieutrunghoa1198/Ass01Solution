@@ -14,10 +14,7 @@ namespace DataAccess.Repository
             throw new NotImplementedException();
         }
 
-        public IEnumerable<MemberDTO> GetList()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<MemberDTO> GetList() => MemberDAO.Instance.GetProductList();
 
         public void Insert(MemberDTO item)
         {

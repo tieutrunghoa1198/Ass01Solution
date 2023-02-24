@@ -9,6 +9,7 @@ namespace DataAccess
         public ManagementDBContext(DbContextOptions<ManagementDBContext> options) : base(options) { }
         public virtual DbSet<MemberDTO> Members { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<OrderDTO> Orders { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Data Source=127.0.0.1,1433;User ID=sa;Password=123456;Database=PRN221_ASS01;Encrypt=False;Trusted_Connection=False;");
 
@@ -19,7 +20,7 @@ namespace DataAccess
              */
             modelBuilder.Entity<MemberDTO>(entity => 
             {
-                entity.ToTable("MemberDTO");
+                entity.ToTable("Member");
                 entity.HasKey(p => p.MemberId).HasName("MemberId");
                 
             });
@@ -33,23 +34,15 @@ namespace DataAccess
                 entity.HasKey(p => p.ProductId).HasName("ProductId");
             });
 
-            //modelBuilder.Entity<Order>(entity =>
-            //{
-            //    entity.Property(e => e.ProductId)
-            //        .ValueGeneratedNever()
-            //        .HasColumnName("ProductId");
-            //    entity.Property(e => e.CategoryId)
-            //        .HasColumnName("CategoryId");
-            //    entity.Property(e => e.ProductName)
-            //        .HasColumnName("ProductName");
-            //    entity.Property(e => e.Weight)
-            //        .HasColumnName("Weight");
-            //    entity.Property(e => e.UnitPrice)
-            //        .HasColumnName("UnitPrice");
-            //    entity.Property(e => e.UnitInStock)
-            //        .HasColumnName("UnitInStock");
-            //});
-
+            /**
+             * Order Table
+             */
+            modelBuilder.Entity<OrderDTO>(entity =>
+            {
+                entity.ToTable("Order");
+                entity.HasKey(p => p.OrderId).HasName("OrderId");
+                entity.HasOne<MemberDTO>(order => order.member).WithMany(mem => mem.Orders).HasForeignKey(o => o.MemberId);
+            });
             OnModelCreatingPartial(modelBuilder);
         }
 

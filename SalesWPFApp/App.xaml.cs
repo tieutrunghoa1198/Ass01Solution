@@ -10,7 +10,7 @@ using BusinessObject;
 using DataAccess.Repository;
 using Microsoft.Extensions.Configuration;
 using System.IO;
-
+using SalesWPFApp.ViewModel;
 namespace SalesWPFApp
 {
     /// <summary>
@@ -37,8 +37,10 @@ namespace SalesWPFApp
         private void ConfigureServices(ServiceCollection services)
         {
             services.AddSingleton(typeof(IMemberRepository), typeof(MemberRepository));
+            services.AddSingleton(typeof(IProductRepository), typeof(ProductRepository));
             services.AddSingleton<LoginWindow>();
             services.AddSingleton<MainWindow>();
+            services.AddSingleton<MainWindowVM>();
         }
 
         private void OnStartup(object sender, StartupEventArgs e)

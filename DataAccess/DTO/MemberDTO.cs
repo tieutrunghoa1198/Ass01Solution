@@ -14,7 +14,7 @@ namespace DataAccess.DTO
         public string City { get; set; }
         public string Country { get; set; }
         public string Password { get; set; }
-
+        public ICollection<OrderDTO> Orders { get; set; }
         public MemberDTO() { }
 
         public MemberDTO(int memberId, string email, string companyName, string city, string country, string password)

@@ -25,17 +25,18 @@
                        FontSize="22"
                        Margin="20,0,0,0"/>
             <StackPanel Grid.Row="1">
-                <!--<RadioButton Content="Member"
+                <RadioButton Content="Member"
                              Height="50"
                              Name="radioMember"
                              FontSize="14"
                              Command="{Binding ShowTable}"
                              Style="{StaticResource MenuButtonTheme}"
-                             CommandParameter="{Binding ElementName=radioMember, Path=Content}"/>-->
+                             CommandParameter="{Binding ElementName=radioMember, Path=Content}"/>
                 <RadioButton Content="Product"
                              Height="50"
                              Name="radioProduct"
                              FontSize="14"
+                             IsChecked="True"
                              Command="{Binding ShowTable}"
                              Style="{StaticResource MenuButtonTheme}"
                              CommandParameter="{Binding ElementName=radioProduct, Path=Content}"/>

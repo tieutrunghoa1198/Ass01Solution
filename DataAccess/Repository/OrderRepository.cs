@@ -9,10 +9,7 @@ namespace DataAccess.Repository
             throw new NotImplementedException();
         }
 
-        public IEnumerable<OrderDTO> GetList()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<OrderDTO> GetList() => OrderDAO.Instance.GetOrderList();
 
         public void Insert(OrderDTO item)
         {

@@ -3,6 +3,8 @@ using System;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using DataAccess;
+using BusinessObject;
+using DataAccess.Repository;
 namespace SalesWPFApp.ViewModel
 {
     class MainWindowVM : BaseVM
@@ -13,7 +15,6 @@ namespace SalesWPFApp.ViewModel
         public ICommand UpdateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand ShowTable { get; set; }
-
         public ObservableCollection<object> CurrentList 
         { 
             get { return _currentList; } 
@@ -26,8 +27,8 @@ namespace SalesWPFApp.ViewModel
 
         public MainWindowVM() 
         {
-            CurrentList = new ObservableCollection<object>();
-            _currentType = "";
+            _currentType = "product";
+            CurrentList = new ProductObject().CreateCollection();
             ShowTableRegister();
             CreateCommandRegister();
             UpdateCommandRegister();
@@ -42,6 +43,7 @@ namespace SalesWPFApp.ViewModel
                 string type = param.ToString().ToLower();
                 _currentType = type;
                 CurrentList = GetFactory(type).CreateCollection();
+                /*CurrentList = GetFactory(type).CreateCollection();*/
             });
         }
 
@@ -71,9 +73,9 @@ namespace SalesWPFApp.ViewModel
             });
         }
 
-        private FactoryTest GetFactory(string type)
+        private IDataGridFactory GetFactory(string type)
         {
-            return new CollectionFactory(type).MyObject;
+            return new CollectionFactory(type).MyList;
         }
 
         private void ClearList()
