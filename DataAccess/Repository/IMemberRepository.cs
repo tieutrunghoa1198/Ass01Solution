@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using DataAccess.DTO;
 namespace DataAccess.Repository
 {
-    public interface IMemberRepository
-    {
-    }
+    public interface IMemberRepository: IRepository<MemberDTO> { }
 }

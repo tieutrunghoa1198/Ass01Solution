@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using DataAccess.DTO;
 namespace DataAccess.Repository
 {
-    public class IProductRepository
-    {
-    }
+    public interface IProductRepository : IRepository<ProductDTO> { }
 }
