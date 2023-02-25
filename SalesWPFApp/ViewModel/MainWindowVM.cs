@@ -55,15 +55,25 @@ namespace SalesWPFApp.ViewModel
                 ClearList();
                 string type = param.ToString().ToLower();
                 _currentType = type;
-                CurrentList = GetFactory(type).CreateCollection();
+                CurrentList = GetListByType();
             });
+        }
+
+        private ObservableCollection<object> GetListByType()
+        {
+            return GetFactory(_currentType).CreateCollection();
         }
 
         private void CreateCommandRegister()
         {
             this.CreateCommand = new RelayCommand<object>((p) =>
             {
-                GetWindowFactory(_currentType).ShowDialog();
+                var dialog = GetWindowFactory(_currentType);
+                dialog.ShowDialog();
+                dialog.CloseDialog += () =>
+                {
+                    CurrentList = GetListByType();
+                };
             });
         }
 
@@ -73,7 +83,10 @@ namespace SalesWPFApp.ViewModel
             hasSelectedItem(),
             (p) =>
             {
-                Console.Write(SelectedItem);
+
+                
+
+                
                 Console.WriteLine("update");
             });
         }
@@ -84,6 +97,28 @@ namespace SalesWPFApp.ViewModel
             hasSelectedItem(), 
             (p) =>
             {
+                switch (_currentType)
+                {
+                    case "product":
+                        DataAccess.DTO.Product asdz = (DataAccess.DTO.Product)SelectedItem;
+                        DataAccess.Repository.ProductRepository productRepo = new DataAccess.Repository.ProductRepository();
+                        productRepo.Delete(asdz);
+                        CurrentList = GetListByType();
+                        break;
+                    case "order":
+                        DataAccess.DTO.OrderDTO asd2 = (DataAccess.DTO.OrderDTO)SelectedItem;
+                        DataAccess.Repository.OrderRepository orderRepo = new DataAccess.Repository.OrderRepository();
+                        orderRepo.Delete(asd2);
+                        CurrentList = GetListByType();
+                        break;
+                    case "member":
+                        DataAccess.DTO.MemberDTO as3d = (DataAccess.DTO.MemberDTO)SelectedItem;
+                        DataAccess.Repository.MemberRepository memberRepo = new DataAccess.Repository.MemberRepository();
+                        memberRepo.Delete(as3d);
+                        CurrentList = GetListByType();
+
+                        break;
+                }
                 Console.WriteLine("delete");
             });
         }
@@ -105,7 +140,7 @@ namespace SalesWPFApp.ViewModel
 
         private IDialog GetWindowFactory(string type)
         {
-            return new ViewModelFactory(type).dialog;
+            return ViewModelFactory.Instance().dialog(type);
         }
 
         private Predicate<object> hasSelectedItem()

@@ -9,5 +9,6 @@ namespace SalesWPFApp.ViewModel.Interface
     public interface IDialog
     {
         void ShowDialog();
+        Action CloseDialog { get; set;  }
     }
 }

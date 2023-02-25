@@ -3,12 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SalesWPFApp"
+        xmlns:local="clr-namespace:SalesWPFApp" 
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="800"
         Closed="Window_Closed"
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource ProductVM}">
+     
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
@@ -134,7 +136,10 @@
                     Content="Confirm" 
                     Height="30"
                     Width="88"
-                    Command="{Binding ConfirmCommand}"/>
+                    Command="{Binding ConfirmCommand}">
+                
+            </Button>
         </Grid>
     </Grid>
+    
 </Window>

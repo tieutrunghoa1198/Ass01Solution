@@ -14,10 +14,12 @@ namespace SalesWPFApp.ViewModel
         private string _weight;
         private string _unitPrice;
         private string _unitStock;
+        private ProductRepository repo;
         public ICommand ConfirmCommand { get; set; }
         public Action Close { get; set; }
         public ProductVM()
         {
+            repo = new ProductRepository();
             ConfirmCommandRegister();
         }
 
@@ -25,22 +27,21 @@ namespace SalesWPFApp.ViewModel
         {
             ConfirmCommand = new RelayCommand<object>((p) =>
             {
-                try
-                {
-                    ProductRepository repo = new ProductRepository();
-                    repo.Insert(GetProduct());
-                } catch (Exception ex)
+                try { repo.Insert(GetProduct()); }
+                catch (Exception ex)
                 {
                     MessageBox.Show("Product id is already existed!");
                     Console.WriteLine(ex.Message);
-                } finally
+                }
+                finally
                 {
                     if (ProductName.Equals("") || ProductName == null)
                     {
                         MessageBox.Show("Product name cannot be empty!");
-                    } else
+                    }
+                    else
                     {
-                        this.CloseWindow();
+                        Close?.Invoke();
                     }
                 }
             });
@@ -130,11 +131,6 @@ namespace SalesWPFApp.ViewModel
                 _unitStock = value;
                 OnPropertyChanged(nameof(UnitInStock));
             }
-        }
-
-        public void CloseWindow()
-        {
-            Close?.Invoke();
         }
     }
 }

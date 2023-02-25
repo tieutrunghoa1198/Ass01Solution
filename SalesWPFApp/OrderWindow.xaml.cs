@@ -1,5 +1,8 @@
 ﻿using System.Windows;
 using SalesWPFApp.ViewModel.Interface;
+using SalesWPFApp.ViewModel;
+using System;
+
 namespace SalesWPFApp
 {
     /// <summary>
@@ -9,7 +12,7 @@ namespace SalesWPFApp
     {
         private static OrderWindow instance = null;
         private static readonly object instanceLock = new object();
-
+        public Action CloseDialog { get; set; }
         private OrderWindow()
         {
             InitializeComponent();
@@ -33,13 +36,14 @@ namespace SalesWPFApp
 
         public void ShowDialog()
         {
-            this.Show();
+            Instance.Show();
         }
 
         private void Window_Closed(object sender, System.EventArgs e)
         {
             Instance.Close();
             Instance = null;
+            CloseDialog?.Invoke();
         }
     }
 }

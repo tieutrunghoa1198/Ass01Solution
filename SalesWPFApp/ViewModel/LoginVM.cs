@@ -11,7 +11,7 @@ namespace SalesWPFApp.ViewModel
         private string _Password;
         public ICommand LoginCommand { get; set; }
         public Action Close { get; set; }
-        public string UserName 
+        public string UserName
         { 
             get => _UserName; 
             set 

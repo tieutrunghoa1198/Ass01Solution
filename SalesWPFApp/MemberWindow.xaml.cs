@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using SalesWPFApp.ViewModel.Interface;
+using SalesWPFApp.ViewModel;
 namespace SalesWPFApp
 {
     /// <summary>
@@ -10,10 +11,11 @@ namespace SalesWPFApp
     {
         private static MemberWindow instance = null;
         private static readonly object instanceLock = new object();
-
+        public Action CloseDialog { get; set; }
         private MemberWindow()
         {
             InitializeComponent();
+            MemberVM member = new MemberVM();
         }
         public static MemberWindow Instance
         {
@@ -34,13 +36,14 @@ namespace SalesWPFApp
 
         public void ShowDialog()
         {
-            this.Show();
+            Instance.Show();
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
             Instance.Close();
             Instance = null;
+            CloseDialog?.Invoke();
         }
     }
 }

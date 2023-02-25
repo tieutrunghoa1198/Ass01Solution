@@ -12,8 +12,8 @@ namespace SalesWPFApp
     {
         private static ProductWindow instance = null;
         private static readonly object instanceLock = new object();
-
-        private ProductWindow() 
+        public Action CloseDialog { get; set; }
+        private ProductWindow()
         {
             InitializeComponent();
             ProductVM product = new ProductVM();
@@ -42,15 +42,19 @@ namespace SalesWPFApp
             }
         }
 
+        
+
         private void Window_Closed(object sender, EventArgs e)
         {
             Instance.Close();
             Instance = null;
+            CloseDialog?.Invoke();
         }
 
-        public async void ShowDialog()
+        public void ShowDialog()
         {
-            this.Show();
+            Instance.Show();
         }
+
     }
 }
