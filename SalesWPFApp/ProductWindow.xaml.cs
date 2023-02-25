@@ -1,17 +1,6 @@
-﻿using DataAccess;
+﻿
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using SalesWPFApp.ViewModel.Interface;
 using SalesWPFApp.ViewModel;
 namespace SalesWPFApp
@@ -28,6 +17,13 @@ namespace SalesWPFApp
         {
             InitializeComponent();
             ProductVM product = new ProductVM();
+            if (DataContext is ICloseWindow vm)
+            {
+                vm.Close += () =>
+                {
+                    this.Close();
+                };
+            }
         }
         public static ProductWindow Instance
         {
@@ -52,7 +48,7 @@ namespace SalesWPFApp
             Instance = null;
         }
 
-        public void ShowDialog()
+        public async void ShowDialog()
         {
             this.Show();
         }

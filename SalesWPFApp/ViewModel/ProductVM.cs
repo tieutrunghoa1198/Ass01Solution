@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using DataAccess.DTO;
 using DataAccess.Repository;
+using SalesWPFApp.ViewModel.Interface;
 namespace SalesWPFApp.ViewModel
 {
-    class ProductVM : BaseVM
+    class ProductVM : BaseVM, ICloseWindow
     {
         private string _productId;
         private string _categoryId;
@@ -13,7 +15,7 @@ namespace SalesWPFApp.ViewModel
         private string _unitPrice;
         private string _unitStock;
         public ICommand ConfirmCommand { get; set; }
-
+        public Action Close { get; set; }
         public ProductVM()
         {
             ConfirmCommandRegister();
@@ -23,8 +25,24 @@ namespace SalesWPFApp.ViewModel
         {
             ConfirmCommand = new RelayCommand<object>((p) =>
             {
-                ProductRepository repo = new ProductRepository();
-                repo.Insert(GetProduct());
+                try
+                {
+                    ProductRepository repo = new ProductRepository();
+                    repo.Insert(GetProduct());
+                } catch (Exception ex)
+                {
+                    MessageBox.Show("Product id is already existed!");
+                    Console.WriteLine(ex.Message);
+                } finally
+                {
+                    if (ProductName.Equals("") || ProductName == null)
+                    {
+                        MessageBox.Show("Product name cannot be empty!");
+                    } else
+                    {
+                        this.CloseWindow();
+                    }
+                }
             });
         }
 
@@ -112,6 +130,11 @@ namespace SalesWPFApp.ViewModel
                 _unitStock = value;
                 OnPropertyChanged(nameof(UnitInStock));
             }
+        }
+
+        public void CloseWindow()
+        {
+            Close?.Invoke();
         }
     }
 }

@@ -15,6 +15,8 @@ namespace SalesWPFApp.ViewModel
         public ICommand CreateCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
+        public ICommand SearchCommand { get; set; }
+        public ICommand ReportCommand { get; set; }
         public ICommand ShowTable { get; set; }
         public object SelectedItem 
         { 
@@ -43,6 +45,7 @@ namespace SalesWPFApp.ViewModel
             CreateCommandRegister();
             UpdateCommandRegister();
             DeleteCommandRegister();
+            SearchCommandRegister();
         }   
 
         private void ShowTableRegister()
@@ -79,6 +82,16 @@ namespace SalesWPFApp.ViewModel
         {
             this.DeleteCommand = new RelayCommand<object>(
             hasSelectedItem(), 
+            (p) =>
+            {
+                Console.WriteLine("delete");
+            });
+        }
+
+        private void SearchCommandRegister()
+        {
+            this.SearchCommand = new RelayCommand<object>(
+            (p) => { return _currentType.ToLower().Equals("product"); },
             (p) =>
             {
                 Console.WriteLine("delete");
