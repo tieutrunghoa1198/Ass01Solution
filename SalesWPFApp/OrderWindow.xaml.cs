@@ -16,6 +16,13 @@ namespace SalesWPFApp
         private OrderWindow()
         {
             InitializeComponent();
+            if (DataContext is ICloseWindow vm)
+            {
+                vm.Close += () =>
+                {
+                    this.Close();
+                };
+            }
         }
         public static OrderWindow Instance
         {
@@ -44,6 +51,12 @@ namespace SalesWPFApp
             Instance.Close();
             Instance = null;
             CloseDialog?.Invoke();
+            freightTxt.Text= string.Empty;
+            orderDateTxt.Text= string.Empty;
+            orderIdTxt.Text= string.Empty;
+            shippedDateTxt.Text= string.Empty;
+            requireDateTxt.Text= string.Empty;
+            memberIdTxt.Text= string.Empty;
         }
     }
 }

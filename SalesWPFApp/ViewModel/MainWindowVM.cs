@@ -5,6 +5,10 @@ using BusinessObject;
 using SalesWPFApp.ViewModel.Interface;
 using BusinessObject.Factory;
 using SalesWPFApp.Factory;
+using System.ComponentModel;
+using System.Windows;
+using DataAccess.DTO;
+using DataAccess.Repository;
 namespace SalesWPFApp.ViewModel
 {
     class MainWindowVM : BaseVM
@@ -18,29 +22,11 @@ namespace SalesWPFApp.ViewModel
         public ICommand SearchCommand { get; set; }
         public ICommand ReportCommand { get; set; }
         public ICommand ShowTable { get; set; }
-        public object SelectedItem 
-        { 
-            get { return _selectedItem; }
-            set
-            {
-                _selectedItem = value;
-                OnPropertyChanged(nameof(SelectedItem));
-            } 
-        }
-        public ObservableCollection<object> CurrentList 
-        { 
-            get { return _currentList; } 
-            set
-            {
-                _currentList = value;
-                OnPropertyChanged("CurrentList");
-            }
-        }
-
+        private bool IsCreateDialogOpen { get; set; }
         public MainWindowVM() 
         {
             _currentType = "member";
-            CurrentList = new MemberObject().CreateCollection();
+            CurrentList = GetListByType();
             ShowTableRegister();
             CreateCommandRegister();
             UpdateCommandRegister();
@@ -59,34 +45,71 @@ namespace SalesWPFApp.ViewModel
             });
         }
 
-        private ObservableCollection<object> GetListByType()
-        {
-            return GetFactory(_currentType).CreateCollection();
-        }
-
         private void CreateCommandRegister()
         {
             this.CreateCommand = new RelayCommand<object>((p) =>
             {
-                var dialog = GetWindowFactory(_currentType);
-                dialog.ShowDialog();
-                dialog.CloseDialog += () =>
-                {
-                    CurrentList = GetListByType();
-                };
+                IsCreateDialogOpen = true;
+                var dialog = (Window)GetWindowFactory(_currentType);
+                dialog.Show();
+                dialog.Closed += DataWindow_Closing;
             });
         }
-
+        void DataWindow_Closing(object sender, EventArgs e)
+        {
+            CurrentList = GetListByType();
+            IsCreateDialogOpen= false;
+        }
         private void UpdateCommandRegister() 
         {
             this.UpdateCommand = new RelayCommand<object>(
             hasSelectedItem(),
             (p) =>
             {
+                switch (_currentType)
+                {
+                    case "product":
+                        Product product = (Product)SelectedItem;
+                        var productWindow = (ProductWindow)GetWindowFactory(_currentType);
+                        productWindow.idTxtBox.Text = product.ProductId.ToString();
+                        productWindow.mySecret.Text = "True";
+                        productWindow.categoryTxtBox.Text = product.CategoryId.ToString();
+                        productWindow.nameTxtBox.Text = product.ProductName.ToString();
+                        productWindow.weightTxtBox.Text = product.Weight.ToString();
+                        productWindow.unitPriceTxtBox.Text = product.UnitPrice.ToString();
+                        productWindow.unitStockTxtBox.Text = product.UnitInStock.ToString();
+                        productWindow.ShowDialog();
+                        productWindow.Closed += DataWindow_Closing;
+                        break;
+                    case "order":
+                        OrderDTO order = (OrderDTO)SelectedItem;
+                        var orderWindow = (OrderWindow)GetWindowFactory(_currentType);
+                        orderWindow.orderIdTxt.Text = order.OrderId.ToString();
+                        orderWindow.mySecret.Text = "True";
+                        orderWindow.memberIdTxt.Text = order.MemberId.ToString();
+                        orderWindow.orderDateTxt.Text = order.OrderDate.ToString();
+                        orderWindow.requireDateTxt.Text = order.RequiredDate.ToString();
+                        orderWindow.shippedDateTxt.Text = order.ShippedDate.ToString();
+                        orderWindow.freightTxt.Text = order.Freight.ToString();
+                        orderWindow.ShowDialog();
+                        orderWindow.Closed += DataWindow_Closing;
+                        break;
+                    case "member":
+                        MemberDTO member = (MemberDTO)SelectedItem;
+                        var memberWindow = (MemberWindow)GetWindowFactory(_currentType);
+                        memberWindow.memberIdTxt.Text = member.MemberId.ToString();
+                        memberWindow.mySecret.Text = "True";
+                        memberWindow.emailTxt.Text = member.Email.ToString();
+                        memberWindow.companyNameTxt.Text = member.CompanyName.ToString();
+                        memberWindow.cityTxt.Text= member.City.ToString();
+                        memberWindow.countryTxt.Text = member.Country.ToString();
+                        memberWindow.passwordTxt.Text = member.Password.ToString();
+                        memberWindow.ShowDialog();
+                        memberWindow.Closed += DataWindow_Closing;
+                        break;
+                }
 
-                
 
-                
                 Console.WriteLine("update");
             });
         }
@@ -97,27 +120,32 @@ namespace SalesWPFApp.ViewModel
             hasSelectedItem(), 
             (p) =>
             {
-                switch (_currentType)
+                try
                 {
-                    case "product":
-                        DataAccess.DTO.Product asdz = (DataAccess.DTO.Product)SelectedItem;
-                        DataAccess.Repository.ProductRepository productRepo = new DataAccess.Repository.ProductRepository();
-                        productRepo.Delete(asdz);
-                        CurrentList = GetListByType();
-                        break;
-                    case "order":
-                        DataAccess.DTO.OrderDTO asd2 = (DataAccess.DTO.OrderDTO)SelectedItem;
-                        DataAccess.Repository.OrderRepository orderRepo = new DataAccess.Repository.OrderRepository();
-                        orderRepo.Delete(asd2);
-                        CurrentList = GetListByType();
-                        break;
-                    case "member":
-                        DataAccess.DTO.MemberDTO as3d = (DataAccess.DTO.MemberDTO)SelectedItem;
-                        DataAccess.Repository.MemberRepository memberRepo = new DataAccess.Repository.MemberRepository();
-                        memberRepo.Delete(as3d);
-                        CurrentList = GetListByType();
-
-                        break;
+                    switch (_currentType)
+                    {
+                        case "product":
+                            Product asdz = (Product)SelectedItem;
+                            ProductRepository productRepo = new ProductRepository();
+                            productRepo.Delete(asdz);
+                            CurrentList = GetListByType();
+                            break;
+                        case "order":
+                            OrderDTO asd2 = (OrderDTO)SelectedItem;
+                            OrderRepository orderRepo = new OrderRepository();
+                            orderRepo.Delete(asd2);
+                            CurrentList = GetListByType();
+                            break;
+                        case "member":
+                            MemberDTO as3d = (MemberDTO)SelectedItem;
+                            MemberRepository memberRepo = new MemberRepository();
+                            memberRepo.Delete(as3d);
+                            CurrentList = GetListByType();
+                            break;
+                    }
+                } catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
                 Console.WriteLine("delete");
             });
@@ -133,6 +161,10 @@ namespace SalesWPFApp.ViewModel
             });
         }
 
+        private ObservableCollection<object> GetListByType()
+        {
+            return GetFactory(_currentType).CreateCollection();
+        }
         private IDataGridFactory GetFactory(string type)
         {
             return new CollectionFactory(type).MyList;
@@ -151,6 +183,10 @@ namespace SalesWPFApp.ViewModel
                 {
                     return false;
                 }
+                if (IsCreateDialogOpen)
+                {
+                    return false;
+                }
                 else return true;
             };
         }
@@ -158,6 +194,25 @@ namespace SalesWPFApp.ViewModel
         private void ClearList()
         {
             CurrentList.Clear();
+        }
+
+        public object SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                _selectedItem = value;
+                OnPropertyChanged(nameof(SelectedItem));
+            }
+        }
+        public ObservableCollection<object> CurrentList
+        {
+            get { return _currentList; }
+            set
+            {
+                _currentList = value;
+                OnPropertyChanged("CurrentList");
+            }
         }
     }
 }

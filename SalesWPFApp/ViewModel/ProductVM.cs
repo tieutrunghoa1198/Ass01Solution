@@ -14,11 +14,24 @@ namespace SalesWPFApp.ViewModel
         private string _weight;
         private string _unitPrice;
         private string _unitStock;
+        private string _mySecret;
+        public string mySecret 
+        { 
+            get
+            {
+                return _mySecret;
+            }
+            set
+            {
+                _mySecret = value;
+            } 
+        }
         private ProductRepository repo;
         public ICommand ConfirmCommand { get; set; }
         public Action Close { get; set; }
         public ProductVM()
         {
+            mySecret = "False";
             repo = new ProductRepository();
             ConfirmCommandRegister();
         }
@@ -27,24 +40,60 @@ namespace SalesWPFApp.ViewModel
         {
             ConfirmCommand = new RelayCommand<object>((p) =>
             {
-                try { repo.Insert(GetProduct()); }
-                catch (Exception ex)
+                switch (mySecret)
                 {
-                    MessageBox.Show("Product id is already existed!");
-                    Console.WriteLine(ex.Message);
-                }
-                finally
-                {
-                    if (ProductName.Equals("") || ProductName == null)
-                    {
-                        MessageBox.Show("Product name cannot be empty!");
-                    }
-                    else
-                    {
-                        Close?.Invoke();
-                    }
+                    default:
+                        try { repo.Insert(GetProduct()); }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Product id is already existed!");
+                            Console.WriteLine(ex.Message);
+                        }
+                        finally
+                        {
+                            if (ProductName.Equals("") || ProductName == null)
+                            {
+                                MessageBox.Show("Product name cannot be empty!");
+                            }
+                            else
+                            {
+                                CloseWindow();
+                            }
+                        }
+                        break;
+                    case "True":
+                        try { repo.Update(GetProduct()); }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Product id is already existed!");
+                            Console.WriteLine(ex.Message);
+                        }
+                        finally
+                        {
+                            if (ProductName.Equals("") || ProductName == null)
+                            {
+                                MessageBox.Show("Product name cannot be empty!");
+                            }
+                            else
+                            {
+                                CloseWindow();
+                            }
+                        }
+                        Console.WriteLine();
+                        break;
                 }
             });
+        }
+
+        private void CloseWindow()
+        {
+            Close?.Invoke();
+            ProductId = "";
+            CategoryId = "";
+            ProductName = "";
+            Weight = "";
+            UnitPrice = "";
+            UnitInStock = "";
         }
 
         private Product GetProduct()

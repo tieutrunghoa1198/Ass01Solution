@@ -15,7 +15,13 @@ namespace SalesWPFApp
         private MemberWindow()
         {
             InitializeComponent();
-            MemberVM member = new MemberVM();
+            if (DataContext is ICloseWindow vm)
+            {
+                vm.Close += () =>
+                {
+                    this.Close();
+                };
+            }
         }
         public static MemberWindow Instance
         {
@@ -44,6 +50,12 @@ namespace SalesWPFApp
             Instance.Close();
             Instance = null;
             CloseDialog?.Invoke();
+            memberIdTxt.Text = string.Empty;
+            companyNameTxt.Text = string.Empty;
+            emailTxt.Text = string.Empty;
+            cityTxt.Text = string.Empty;
+            countryTxt.Text = string.Empty;
+            passwordTxt.Text = string.Empty;
         }
     }
 }

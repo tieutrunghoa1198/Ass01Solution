@@ -16,7 +16,6 @@ namespace SalesWPFApp
         private ProductWindow()
         {
             InitializeComponent();
-            ProductVM product = new ProductVM();
             if (DataContext is ICloseWindow vm)
             {
                 vm.Close += () =>
@@ -48,6 +47,13 @@ namespace SalesWPFApp
         {
             Instance.Close();
             Instance = null;
+            categoryTxtBox.Text = "";
+            idTxtBox.Text = "";
+            nameTxtBox.Text = "";
+            weightTxtBox.Text = "";
+            unitPriceTxtBox.Text = "";
+            unitStockTxtBox.Text = "";
+            mySecret.Text = "";
             CloseDialog?.Invoke();
         }
 

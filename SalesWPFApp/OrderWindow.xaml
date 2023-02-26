@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Closed="Window_Closed"
+        DataContext="{StaticResource OrderVM}"
         Title="OrderWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -84,6 +85,8 @@
                      Grid.Column="1"
                      Height="20"
                      Width="300"
+                     Name="orderIdTxt"
+                     Text="{Binding OrderId, UpdateSourceTrigger=PropertyChanged}"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left"
                      />
@@ -92,6 +95,8 @@
                      Grid.Column="1"
                      Height="20"
                      Width="300"
+                     Name="memberIdTxt"
+                     Text="{Binding MemberId, UpdateSourceTrigger=PropertyChanged}"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left"
                      />
@@ -100,6 +105,8 @@
                      Grid.Column="1"
                      Height="20"
                      Width="300"
+                     Name="orderDateTxt"
+                     Text="{Binding OrderDate, UpdateSourceTrigger=PropertyChanged}"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left"
                      />
@@ -108,6 +115,8 @@
                      Grid.Column="1"
                      Height="20"
                      Width="300"
+                     Text="{Binding RequiredDate, UpdateSourceTrigger=PropertyChanged}"
+                     Name="requireDateTxt"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left"
                      />
@@ -116,6 +125,9 @@
                      Grid.Column="1"
                      Height="20"
                      Width="300"
+                     Text="{Binding ShippedDate, UpdateSourceTrigger=PropertyChanged}"
+                     
+                     Name="shippedDateTxt"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left"
                      />
@@ -124,6 +136,8 @@
                      Grid.Column="1"
                      Height="20"
                      Width="300"
+                     Text="{Binding Freight, UpdateSourceTrigger=PropertyChanged}"
+                     Name="freightTxt"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left"
                      />
@@ -138,7 +152,16 @@
             <Button Grid.Column="0"
                     Content="Confirm" 
                     Height="30"
-                    Width="88"/>
+                    Width="88"
+                    Command="{Binding ConfirmCommand}"/>
+            <TextBox Grid.Column="1"
+                     Height="20"
+                     Width="300"
+                     Visibility="Hidden"
+                     Name="mySecret"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Left"
+                     Text="{Binding mySecret, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
         </Grid>
     </Grid>
 </Window>
