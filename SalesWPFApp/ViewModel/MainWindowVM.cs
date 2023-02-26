@@ -5,10 +5,8 @@ using BusinessObject;
 using SalesWPFApp.ViewModel.Interface;
 using BusinessObject.Factory;
 using SalesWPFApp.Factory;
-using System.ComponentModel;
 using System.Windows;
 using DataAccess.DTO;
-using DataAccess.Repository;
 namespace SalesWPFApp.ViewModel
 {
     class MainWindowVM : BaseVM
@@ -55,11 +53,7 @@ namespace SalesWPFApp.ViewModel
                 dialog.Closed += DataWindow_Closing;
             });
         }
-        void DataWindow_Closing(object sender, EventArgs e)
-        {
-            CurrentList = GetListByType();
-            IsCreateDialogOpen= false;
-        }
+
         private void UpdateCommandRegister() 
         {
             this.UpdateCommand = new RelayCommand<object>(
@@ -120,34 +114,8 @@ namespace SalesWPFApp.ViewModel
             hasSelectedItem(), 
             (p) =>
             {
-                try
-                {
-                    switch (_currentType)
-                    {
-                        case "product":
-                            Product asdz = (Product)SelectedItem;
-                            ProductRepository productRepo = new ProductRepository();
-                            productRepo.Delete(asdz);
-                            CurrentList = GetListByType();
-                            break;
-                        case "order":
-                            OrderDTO asd2 = (OrderDTO)SelectedItem;
-                            OrderRepository orderRepo = new OrderRepository();
-                            orderRepo.Delete(asd2);
-                            CurrentList = GetListByType();
-                            break;
-                        case "member":
-                            MemberDTO as3d = (MemberDTO)SelectedItem;
-                            MemberRepository memberRepo = new MemberRepository();
-                            memberRepo.Delete(as3d);
-                            CurrentList = GetListByType();
-                            break;
-                    }
-                } catch(Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                Console.WriteLine("delete");
+                CRUDFactory.GetBusinessObject(_currentType).Delete(SelectedItem);
+                CurrentList = GetListByType();
             });
         }
 
@@ -159,6 +127,12 @@ namespace SalesWPFApp.ViewModel
             {
                 Console.WriteLine("delete");
             });
+        }
+
+        private void DataWindow_Closing(object sender, EventArgs e)
+        {
+            CurrentList = GetListByType();
+            IsCreateDialogOpen = false;
         }
 
         private ObservableCollection<object> GetListByType()

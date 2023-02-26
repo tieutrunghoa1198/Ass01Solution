@@ -11,7 +11,6 @@ namespace SalesWPFApp
         public MainWindow()
         {
             InitializeComponent();
-            MainWindowVM app = new MainWindowVM(); 
         }
     }
 }
