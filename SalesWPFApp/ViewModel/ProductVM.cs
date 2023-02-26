@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Metrics;
 using System.Windows;
 using System.Windows.Input;
 using DataAccess.DTO;
@@ -14,49 +15,120 @@ namespace SalesWPFApp.ViewModel
         private string _weight;
         private string _unitPrice;
         private string _unitStock;
+        private string _mySecret;
+        public string mySecret 
+        { 
+            get
+            {
+                return _mySecret;
+            }
+            set
+            {
+                _mySecret = value;
+            } 
+        }
         private ProductRepository repo;
         public ICommand ConfirmCommand { get; set; }
         public Action Close { get; set; }
         public ProductVM()
         {
+            EmptyAllFields();
+            mySecret = "False";
             repo = new ProductRepository();
             ConfirmCommandRegister();
         }
 
         private void ConfirmCommandRegister()
         {
-            ConfirmCommand = new RelayCommand<object>((p) =>
+            ConfirmCommand = new RelayCommand<object>(
+            (p) =>
             {
-                try { repo.Insert(GetProduct()); }
-                catch (Exception ex)
+                return ValidateNotEmpty();
+            },
+            (p) =>
+            {
+                switch (mySecret)
                 {
-                    MessageBox.Show("Product id is already existed!");
-                    Console.WriteLine(ex.Message);
-                }
-                finally
-                {
-                    if (ProductName.Equals("") || ProductName == null)
-                    {
-                        MessageBox.Show("Product name cannot be empty!");
-                    }
-                    else
-                    {
-                        Close?.Invoke();
-                    }
+                    default:
+                        try { repo.Insert(GetProduct()); }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Product id is already existed!");
+                            Console.WriteLine(ex.Message);
+                        }
+                        finally
+                        {
+                            if (ProductName.Equals("") || ProductName == null)
+                            {
+                                MessageBox.Show("Product name cannot be empty!");
+                            }
+                            else
+                            {
+                                CloseWindow();
+                            }
+                        }
+                        break;
+                    case "True":
+                        try { repo.Update(GetProduct()); }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Product id is already existed!");
+                            Console.WriteLine(ex.Message);
+                        }
+                        finally
+                        {
+                            if (ProductName.Equals("") || ProductName == null)
+                            {
+                                MessageBox.Show("Product name cannot be empty!");
+                            }
+                            else
+                            {
+                                CloseWindow();
+                            }
+                        }
+                        Console.WriteLine();
+                        break;
                 }
             });
+        }
+
+        private bool ValidateNotEmpty()
+        {
+            if (ProductId.Equals("")) return false;
+            if (CategoryId.Equals("")) return false;
+            if (ProductName.Equals("")) return false;
+            if (Weight.Equals("")) return false;
+            if (UnitPrice.Equals("")) return false;
+            if (UnitInStock.Equals("")) return false;
+            return true;
+        }
+
+        private void CloseWindow()
+        {
+            Close?.Invoke();
+            EmptyAllFields();
+        }
+
+        private void EmptyAllFields()
+        {
+            ProductId = "";
+            CategoryId = "";
+            ProductName = "";
+            Weight = "";
+            UnitPrice = "";
+            UnitInStock = "";
         }
 
         private Product GetProduct()
         {
             return new Product
                 (
-                    Int32.Parse(ProductId),
-                    Int32.Parse(CategoryId),
-                    ProductName,
-                    Weight,
-                    Decimal.Parse(UnitPrice),
-                    Int32.Parse(UnitInStock)
+                    Int32.Parse(ProductId.Trim()),
+                    Int32.Parse(CategoryId.Trim()),
+                    ProductName.Trim(),
+                    Weight.Trim(),
+                    Decimal.Parse(UnitPrice.Trim()),
+                    Int32.Parse(UnitInStock.Trim())
                 );
         }
 

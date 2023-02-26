@@ -9,21 +9,16 @@ namespace DataAccess.Repository
 {
     public class MemberRepository : IMemberRepository
     {
-        public void Delete(MemberDTO item)
-        {
-            throw new NotImplementedException();
-        }
+        public void Delete(MemberDTO item) 
+        => MemberDAO.Instance.Delete(item);
 
-        public IEnumerable<MemberDTO> GetList() => MemberDAO.Instance.GetProductList();
+        public IEnumerable<MemberDTO> GetList() 
+        => MemberDAO.Instance.GetProductList();
 
-        public void Insert(MemberDTO item)
-        {
-            throw new NotImplementedException();
-        }
+        public void Insert(MemberDTO item) 
+        => MemberDAO.Instance.AddNew(item);
 
         public void Update(MemberDTO item)
-        {
-            throw new NotImplementedException();
-        }
+        => MemberDAO.Instance.Update(item);
     }
 }

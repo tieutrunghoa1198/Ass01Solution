@@ -26,5 +26,10 @@ namespace DataAccess.DTO
             Country = country;
             Password = password;
         }
+
+        public override string? ToString()
+        {
+            return $"{Email}";
+        }
     }
 }

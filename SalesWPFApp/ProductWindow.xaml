@@ -10,7 +10,7 @@
         Closed="Window_Closed"
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource ProductVM}">
-     
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
@@ -80,7 +80,7 @@
                      Grid.Column="1"
                      Height="20"
                      Width="300"
-                     
+                     Name="idTxtBox"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left"
                      Text="{Binding ProductId, UpdateSourceTrigger=PropertyChanged}"/>
@@ -89,6 +89,7 @@
                      Grid.Column="1"
                      Height="20"
                      Width="300"
+                     Name="categoryTxtBox"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left"
                      Text="{Binding CategoryId, UpdateSourceTrigger=PropertyChanged}"/>
@@ -97,6 +98,7 @@
                      Grid.Column="1"
                      Height="20"
                      Width="300"
+                     Name="nameTxtBox"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left"
                      Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}"/>
@@ -105,6 +107,7 @@
                      Grid.Column="1"
                      Height="20"
                      Width="300"
+                     Name="weightTxtBox"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left"
                      Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}"/>
@@ -113,6 +116,7 @@
                      Grid.Column="1"
                      Height="20"
                      Width="300"
+                     Name="unitPriceTxtBox"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left"
                      Text="{Binding UnitPrice, UpdateSourceTrigger=PropertyChanged}"/>
@@ -121,6 +125,7 @@
                      Grid.Column="1"
                      Height="20"
                      Width="300"
+                     Name="unitStockTxtBox"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left"
                      Text="{Binding UnitInStock, UpdateSourceTrigger=PropertyChanged}"/>
@@ -139,7 +144,14 @@
                     Command="{Binding ConfirmCommand}">
                 
             </Button>
+            <TextBox Grid.Column="1"
+                     Height="20"
+                     Width="300"
+                     Visibility="Hidden"
+                     Name="mySecret"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Left"
+                     Text="{Binding mySecret, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
         </Grid>
     </Grid>
-    
 </Window>

@@ -93,18 +93,6 @@
                             Width="88" 
                             Height="30"
                             Command="{Binding DeleteCommand}"/>
-
-                    <Button Grid.Column="3" 
-                            Content="Search" 
-                            Width="88" 
-                            Height="30"
-                            Command="{Binding SearchCommand}"/>
-
-                    <Button Grid.Column="4" 
-                            Content="Report" 
-                            Width="88" 
-                            Height="30"
-                            />
                 </Grid>
             </Grid>
         </Grid>
